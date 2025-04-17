@@ -37,6 +37,15 @@ def load_customer_data(url):
 hosts = load_host_data(host_url)
 customers = load_customer_data(customer_url)
 
+
+hosts_unique = hosts.drop_duplicates(subset=['Username'])
+
+host_coords = (
+    hosts_unique
+    .set_index('Username')[['Latitude','Longitude']]
+    .to_dict(orient='index')
+)
+
 # --- Map Visualization ---
 st.subheader("🗺️ Map of Hosts and Customers")
 
@@ -54,12 +63,26 @@ for _, row in hosts.iterrows():
 
 # Plot customers (green w/ user icon)
 for _, row in customers.iterrows():
+    cust_loc = (row['Latitude'], row['Longitude'])
     folium.Marker(
         location=[row['Latitude'], row['Longitude']],
         tooltip=row['Username'],
         popup=f"Customer: {row['Check-In Date'].date()} to {row['End Date'].date()}",
         icon=folium.Icon(color='red', icon='user')
     ).add_to(m)
+
+    matched = row.get('Matched Host')
+    if pd.notna(matched) and matched in host_coords:
+        host_loc = (host_coords[matched]['Latitude'], host_coords[matched]['Longitude'])
+        
+        folium.PolyLine(
+            locations=[cust_loc, host_loc],
+            color='red',         # make it stand out
+            weight=5,             # thicker line
+            opacity=0.8,
+            tooltip=f"Customer: {row['Username']} ↔ Host: {matched}"  
+        ).add_to(m)
+
 
 st_folium(m, width=900, height=550)
 
