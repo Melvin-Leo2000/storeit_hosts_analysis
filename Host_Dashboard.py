@@ -3,14 +3,17 @@ import pandas as pd
 import folium
 from streamlit_folium import st_folium
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
 st.set_page_config(page_title="StoreIt Host & Customer Map", layout="wide")
 st.title("📦 StoreIt Host & Customer Dashboard")
 
 # Google Sheet Info
-host_sheet_id = "1j6_OeNNilcKX81RNCGBoI2zewVU9D45ftPxSO0_-qRo"
-host_gid = "422088740"  # "Host Database"
-customer_gid = "0"       # assuming this is the "Customers" tab
+load_dotenv()
+host_sheet_id = os.getenv("HOST_SHEET_ID")
+host_gid = os.getenv("HOST_GID")
+customer_gid = os.getenv("CUSTOMER_GID")
 
 host_url = f"https://docs.google.com/spreadsheets/d/{host_sheet_id}/export?format=csv&gid={host_gid}"
 customer_url = f"https://docs.google.com/spreadsheets/d/{host_sheet_id}/export?format=csv&gid={customer_gid}"
