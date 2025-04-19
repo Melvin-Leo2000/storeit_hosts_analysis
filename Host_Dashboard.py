@@ -14,14 +14,14 @@ st.set_page_config(page_title="StoreIt Host & Customer Map", layout="wide")
 st.title("📦 StoreIt Host & Customer Dashboard")
 
 # Google Sheet Info
-load_dotenv()
-host_sheet_id = os.getenv("HOST_SHEET_ID")
-host_gid = os.getenv("HOST_GID")
-customer_gid = os.getenv("CUSTOMER_GID")
+
+host_sheet_id = st.secrets["HOST_SHEET_ID"]
+host_gid = st.secrets["HOST_GID"]
+customer_gid = st.secrets["CUSTOMER_GID"]
 
 # OneMap API
-ONEMAP_EMAIL = os.getenv("ONEMAP_EMAIL")
-ONEMAP_PASSWORD = os.getenv("ONEMAP_PASSWORD")
+ONEMAP_EMAIL = st.secrets["ONEMAP_EMAIL"]
+ONEMAP_PASSWORD = st.secrets["ONEMAP_PASSWORD"]
 
 host_url = f"https://docs.google.com/spreadsheets/d/{host_sheet_id}/export?format=csv&gid={host_gid}"
 customer_url = f"https://docs.google.com/spreadsheets/d/{host_sheet_id}/export?format=csv&gid={customer_gid}"
