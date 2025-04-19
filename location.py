@@ -61,27 +61,3 @@ def get_address_from_postal(postal_code, token):
     
 
 
-
-
-if __name__ == "__main__":
-
-    # Help me mask my credentials haha
-    manager = OneMapTokenManager(
-        "melvinleo2000@gmail.com", 
-        "T0006938d@@@@@"
-    )
-    
-    token = manager.get_token()
-    postal_code = "560406"
-    result = get_address_from_postal(postal_code, token)
-
-    # taking the latest search result returned by the API 
-    address = result[0]['ADDRESS']
-    latitude = result[0]['LATITUDE']
-    longtitude = result[0]['LONGITUDE']
-    print(address)
-    print(latitude)
-    print(longtitude)
-
-    print(result)
-    # print(result)
