@@ -10,8 +10,8 @@ import os
 from components.customer_checkin import display_selected_customer_map
 from components.customer_checkin import customer_checkin
 
-load_dotenv()
-from location import OneMapTokenManager, get_address_from_postal
+# load_dotenv()
+# from location import OneMapTokenManager, get_address_from_postal
 
 
 st.set_page_config(page_title="StoreIt Host & Customer Map", layout="wide")
