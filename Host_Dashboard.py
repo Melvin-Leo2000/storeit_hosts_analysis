@@ -10,6 +10,8 @@ import os
 from components.customer_checkin import display_selected_customer_map
 from components.customer_checkin import customer_checkin
 
+from components.customer_current_location import display_hosts_map
+
 # load_dotenv()
 # from location import OneMapTokenManager, get_address_from_postal
 
@@ -28,7 +30,7 @@ ONEMAP_EMAIL = st.secrets["ONEMAP_EMAIL"]
 ONEMAP_PASSWORD = st.secrets["ONEMAP_PASSWORD"]
 
 
-# Google Sheet IDs
+# # Google Sheet IDs
 # host_sheet_id = os.getenv("HOST_SHEET_ID")
 # host_gid = os.getenv("HOST_GID")
 # customer_gid = os.getenv("CUSTOMER_GID")
@@ -74,6 +76,14 @@ host_coords = hosts.drop_duplicates('Username').set_index('Username')[['Latitude
 selected_customer = customer_checkin(customers)
 display_selected_customer_map(selected_customer, customers, host_coords)
 
+### Customer Manual Matching ###
+display_hosts_map(customers, hosts)
+
+
+
+
+
+
 ####### Ongoing Matched Customers and Hosts #########
 
 # Load customer data
@@ -91,6 +101,10 @@ def load_upaid_customer_data(url):
     ]
 
     return df.dropna(subset=['Latitude', 'Longitude'])
+
+
+
+
 
 # unpaid_customers = load_upaid_customer_data(customer_url)
 
